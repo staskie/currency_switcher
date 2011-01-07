@@ -17,8 +17,12 @@ From the available list of currencies you can create methods in a format specifi
 For example:
 
 	require 'currency_switcher'
-	3.usd_to_gbp # => converts 3 US Dollars to British Pounds
-	15.eur_to_aud # => converts 15 Euros to Australian Dollars
+	
+	# Convert 3 US Dollars to British Pounds
+	3.usd_to_gbp
+	
+	# Convert 15 Euros to Australian Dollars
+	15.eur_to_aud
 	
 ## Available Currencies
 
