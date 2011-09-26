@@ -52,11 +52,32 @@ module CurrencySwitcher
   #
   # Returns true if botch currencies are valid or false if one of them is invalid
   def self.both_currencies_valid?
-    CURRENCIES.has_key?(from_currency) && CURRENCIES.has_key?(to_currency)
+    self.from_currency_valid? && self.to_currency_valid?
   end
-  
-  
-  # Calculate the value from fixnum and exchange rate
+
+  # Calculate the value from fixnum, from and to currency
+  #
+  # fixnum - The Fixnum representing how much should be converted
+  # from   - From currency
+  # to     - To currency
+  #
+  # Examples
+  #   CurrencySwitcher.exchange(3,"usd", "gbp")
+  #   # => 5.23
+  #
+  # Returns float value of fixnum multiplied by exchange rate
+  # Raises StandardError if currencies are not valid
+  def self.exchange(fixnum, from, to)
+    @from_currency = from.to_sym
+    @to_currency = to.to_sym
+
+    raise StandardError, "From currency #{from_currency} is invalid" unless self.from_currency_valid?
+    raise StandardError, "To currency #{to_currency} is invalid" unless self.to_currency_valid?
+
+    self.calculate_value(fixnum)
+  end
+
+  # Calculate the value from fixnum
   #
   # fixnum - The Fixnum representing how much should be converted
   #
@@ -98,4 +119,20 @@ module CurrencySwitcher
   def self.currencies
     CURRENCIES.keys.sort.each { |symbol| puts "#{symbol} => #{CURRENCIES[symbol]}"}
   end
+  
+  private 
+  
+  # Check if from currency if valid
+  #
+  # Returns true if from currency if valid
+  def self.from_currency_valid?
+     CURRENCIES.has_key?(from_currency)
+   end
+
+   # Check if to currency is valid
+   #
+   # Returns true if to currency is valid
+   def self.to_currency_valid?
+     CURRENCIES.has_key?(to_currency)
+   end
 end

@@ -10,7 +10,9 @@ $ gem install currency_switcher
 
 ## Usage
 
-From the available list of currencies you can create methods in a format specified below and call them on Fixnums:
+There are two ways of using the library:
+
+1) From the available list of currencies you can create methods in a format specified below and call them on Fixnums:
 
 	'from_currency'_to_'to_currency'
 
@@ -24,6 +26,15 @@ For example:
 	# Convert 15 Euros to Australian Dollars
 	15.eur_to_aud
 	
+2) Pass currencies as the arguments:
+
+For example:
+
+  require 'currency_switcher'
+  
+  # Convert 3 US Dollars to British Pounds
+  3.exchange("usd", "gbp")
+  
 ## Available Currencies
 
 	aed => United Arab Emirates Dirham

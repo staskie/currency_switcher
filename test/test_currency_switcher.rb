@@ -43,12 +43,23 @@ class TestCurrencySwitcher < Test::Unit::TestCase
   end
   
   def test_usd_to_gbp
-    assert_equal(format(2, 0.64539), 2.usd_to_gbp)
-  end
-  
-  def test_eur_to_usd
-    assert_equal(format(3, 1.3171), 3.eur_to_usd)
-  end
+      assert_equal(format(2, 0.64539), 2.usd_to_gbp)
+      assert_equal(format(2, 0.64539), 2.exchange("usd","gbp"))
+    end
+
+
+    def test_eur_to_usd
+      assert_equal(format(3, 1.3171), 3.eur_to_usd)
+      assert_equal(format(3, 1.3171), 3.exchange("eur","usd"))
+    end
+
+    def test_invalid_currency_error
+      assert_raise(StandardError) { 2.exchange("usd","invalid_currency") }
+    end
+
+    def test_argument_error_for_exchange
+      assert_raise(ArgumentError) { 2.exchange("usd") }
+    end
   
   def test_exchange_rate_error
     Nokogiri.stubs(:HTML).returns(nil)
