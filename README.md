@@ -30,10 +30,10 @@ For example:
 
 For example:
 
-  require 'currency_switcher'
+	require 'currency_switcher'
   
-  # Convert 3 US Dollars to British Pounds
-  3.exchange("usd", "gbp")
+	# Convert 3 US Dollars to British Pounds
+	3.exchange("usd", "gbp")
   
 ## Available Currencies
 
