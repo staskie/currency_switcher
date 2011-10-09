@@ -1,3 +1,4 @@
+Manifest
 README.md
 Rakefile
 lib/currency_switcher.rb
@@ -7,4 +8,3 @@ test/helper.rb
 test/html/eur_to_usd.html
 test/html/usd_to_gbp.html
 test/test_currency_switcher.rb
-Manifest
