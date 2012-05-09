@@ -6,7 +6,7 @@ This is a small library that converts currencies using exchange rates from http:
 
 ## Installation
 
-$ gem install currency_switcher
+    gem install currency_switcher
 
 ## Usage
 
