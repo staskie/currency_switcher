@@ -5,7 +5,7 @@ gem 'nokogiri'
 group :test do
     gem 'rake'
     gem 'echoe'
-    gem 'mocha'
     gem 'fakeweb'
     gem 'rspec'
+    gem 'rspec-mocks'
 end
