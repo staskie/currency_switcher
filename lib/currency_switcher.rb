@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
+require 'zlib'
 
 $:.unshift(File.join(File.dirname(__FILE__), 'currency_switcher'))
 
@@ -10,19 +11,19 @@ module CurrencySwitcher
 
   # URL for working out the exchange rate
   URL = "http://exchange-rates.org/converter"
-  
+
   class << self
     # Get 'from' currency
     #
     # Returns the Symbol of 'from' currency
     attr_reader :from_currency
-    
+
     # Get 'to' currency
     #
     # Returns the Symbol of 'to' currency
     attr_reader :to_currency
   end
-  
+
   # Validates if a method called on Fixnum is a currency
   # exchange method
   #
@@ -42,7 +43,7 @@ module CurrencySwitcher
       @from_currency = $1.to_sym
       @to_currency   = $2.to_sym
       @method        = method
-      
+
       both_currencies_valid? ? true : false
     end
   end
@@ -91,48 +92,57 @@ module CurrencySwitcher
   def self.calculate_value(fixnum)
     ex_rate = exchange_rate
     raise StandardError, "Could not work out the result" if ex_rate.nil?
-    
-    value = "%.2f" % (ex_rate * fixnum)
-    value.to_f
+
+    if ex_rate
+      value = "%.2f" % (ex_rate * fixnum)
+      value.to_f
+    end
   end
-  
+
   # Work out the exchange rate for a given URL. 
   # Parse the response and extract the value
   #
   # Returns the Float value of exchange rate or nil
   def self.exchange_rate
-    doc = Nokogiri::HTML(open(self.link), nil, 'UTF-8')
+    stream = open(self.link, 'Accept-Encoding' => 'gzip')
+
+    if (stream.content_encoding.empty?)
+      body = stream.read
+    else
+      body = Zlib::GzipReader.new(stream).read
+    end
+
+    doc = Nokogiri::HTML(body)
     doc.css('#ctl00_M_lblToAmount').text.to_f
-  rescue 
   end
-  
+
   # Create a customized URL for 'from' and 'to' currencies
   #
   # Returns the String representing a valid URL
   def self.link
     "#{URL}/#{from_currency.to_s.upcase}/#{to_currency.to_s.upcase}/1"
   end
-  
+
   # Print the available list of currencies
   #
   # Returns the String with all the currencies
   def self.currencies
     CURRENCIES.keys.sort.each { |symbol| puts "#{symbol} => #{CURRENCIES[symbol]}"}
   end
-  
+
   private 
-  
+
   # Check if from currency if valid
   #
   # Returns true if from currency if valid
   def self.from_currency_valid?
-     CURRENCIES.has_key?(from_currency)
-   end
+    CURRENCIES.has_key?(from_currency)
+  end
 
-   # Check if to currency is valid
-   #
-   # Returns true if to currency is valid
-   def self.to_currency_valid?
-     CURRENCIES.has_key?(to_currency)
-   end
+  # Check if to currency is valid
+  #
+  # Returns true if to currency is valid
+  def self.to_currency_valid?
+    CURRENCIES.has_key?(to_currency)
+  end
 end

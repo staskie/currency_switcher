@@ -8,11 +8,11 @@ $:.unshift(File.join(File.dirname(__FILE__), '../lib'))
 require 'currency_switcher'
 
 def mock_usd_to_gbp
-  File.open('html/usd_to_gbp.html').read
+  File.open(File.join(File.dirname(__FILE__), 'html/usd_to_gbp.html')).read
 end
 
 def mock_eur_to_usd
-  File.open('html/eur_to_usd.html').read
+  File.open(File.join(File.dirname(__FILE__), 'html/eur_to_usd.html')).read
 end
 
 def output
