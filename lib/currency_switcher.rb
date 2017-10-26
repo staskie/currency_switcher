@@ -10,7 +10,7 @@ require 'ext/fixnum'
 module CurrencySwitcher
 
   # URL for working out the exchange rate
-  URL = "http://exchange-rates.org/converter"
+  URL = "https://exchange-rates.org/converter"
 
   class << self
     # Get 'from' currency
