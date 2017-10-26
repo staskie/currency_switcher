@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a small library that converts currencies using exchange rates from http://exchange-rates.org web site.
+This is a small library that converts currencies using exchange rates from https://exchange-rates.org web site.
 
 ## Installation
 
