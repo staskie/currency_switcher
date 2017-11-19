@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe CurrencySwitcher do
   before :all do
-    FakeWeb.register_uri(:get, 'http://exchange-rates.org/converter/EUR/USD/1', :body => mock_eur_to_usd)
-    FakeWeb.register_uri(:get, 'http://exchange-rates.org/converter/USD/GBP/1', :body => mock_usd_to_gbp)
+    FakeWeb.register_uri(:get, 'https://exchange-rates.org/converter/EUR/USD/1', :body => mock_eur_to_usd)
+    FakeWeb.register_uri(:get, 'https://exchange-rates.org/converter/USD/GBP/1', :body => mock_usd_to_gbp)
   end
 
   context 'when exchanging USD to GBP' do
